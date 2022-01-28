@@ -1,0 +1,28 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: install java
+    yum:
+      name: java
+      state: present
+  - name: download the tomcat
+    get_url:
+      url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.58/bin/apache-tomcat-9.0.58.tar.gz
+      dest: /opt
+  - name: untar the file
+    unarchive:
+      src: /opt/apache-tomcat-9.0.58.tar.gz
+      dest: /opt
+      remote_src: true
+  - name: rename the tomcat
+    command: mv /opt/apache-tomcat-9.0.58 /opt/tomcat
+  - name: change user folder parmissions
+    file:
+      path: /opt/tomcat
+      owner: ec2-user
+      group: ec2-user
+  - name: start the tomcat
+    shell: nohup /opt/tomcat/bin/startup.sh
+
+

@@ -1,0 +1,13 @@
+---
+- hosts: testservers
+  tasks:
+   - name: installing apache
+     yum:
+       name: httpd
+       state: installed
+     become: yes
+   - name: starting apache
+     service:
+      name: httpd
+      state: started
+     become: yes
