@@ -15,14 +15,14 @@
       src: /opt/apache-tomcat-9.0.58.tar.gz
       dest: /opt
       remote_src: true
-  - name: rename the tomcat
-    command: mv /opt/apache-tomcat-9.0.58 /opt/tomcat
+  - name: rename the tomcat1
+    command: mv /opt/apache-tomcat-9.0.58 /opt/tomcat1
   - name: change user folder parmissions
     file:
-      path: /opt/tomcat
+      path: /opt/tomcat1
       owner: ec2-user
       group: ec2-user
-  - name: start the tomcat
-    shell: nohup /opt/tomcat/bin/startup.sh
+  - name: start the tomcat1
+    shell: nohup /opt/tomcat1/bin/startup.sh
 
 
