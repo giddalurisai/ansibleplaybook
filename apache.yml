@@ -1,13 +1,39 @@
 ---
-- hosts: testservers
+- hosts: all
   tasks:
    - name: installing apache
      yum:
        name: httpd
        state: installed
      become: yes
+     tags:
+       - install
+   - name: copy the index.html file
+     copy:
+       src: index.html
+       dest: /var/www/html/
+     become: yes
+     tags:
+       - copy
    - name: starting apache
      service:
       name: httpd
       state: started
      become: yes
+     tags:
+       - start
+   - name: stop the apache
+     service:
+       name: httpd
+       state: stopped
+     become: yes
+     tags:
+       - stop
+   - name: uninstalling apache
+     yum:
+      name: httpd
+      state: absent
+     become: yes
+     tags:
+       - uninstalling
+
