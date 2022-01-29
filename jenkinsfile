@@ -1,0 +1,32 @@
+
+pipeline {
+    agent {
+  label 'sai_slave'
+}
+	environment {
+  PATH = "/opt/maven/bin:$PATH"
+}
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+		stage ('checkout') {
+		steps {
+		checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'gitHUBCRED', url: 'https://github.com/giddalurisai/myapp.git']]])
+		}
+		}
+		stage('build') {
+		steps {
+		sh 'mvn package'
+    }
+}
+		stage('deploy') {
+		steps {
+		deploy adapters: [tomcat8(credentialsId: 'tom_CRED_sai', path: '', url: 'http://35.154.244.119:8080')], contextPath: 'kumar', war: '**/*.war'
+}
+}
+}		
+}
+
