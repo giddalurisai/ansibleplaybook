@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: copy the war file
+    src: target/*.war
+    dst: /opt/tomcat/webspps
+    shell: nohup /opt/tomcat/bin/shutdown.sh
+    shell: nohup /opt/tomcat/bin/startup.sh
