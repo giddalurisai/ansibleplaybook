@@ -1,9 +1,12 @@
 ---
-- hosts: all
+- hosts: Appservers
   become: true
-  tasks:
+  tasks: 
   - name: copy the war file
-      src: target/*.war
-      dst: /opt/tomcat/webspps
+    copy: 
+      src: target/hello.war
+      dest: /opt/tomcat/webapps/
+  - name: stop the tomcat
     shell: nohup /opt/tomcat/bin/shutdown.sh
+  - name: starting the tomcat
     shell: nohup /opt/tomcat/bin/startup.sh
